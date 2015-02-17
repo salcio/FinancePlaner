@@ -1,0 +1,14 @@
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
+.idea
+npm-debug.log
+dist/
+.tmp/
+app/config.js
+karma/coverage/PhantomJS 1.9.8 (Windows 7)/
+karma/html/PhantomJS 1.9.8 (Windows 7)/
+karma/xml/unit.xml
