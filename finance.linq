@@ -6,32 +6,37 @@
 
 void Main()
 {
+	var startDate = DateTime.Now;//.AddDays(1);
+	//var startDate = new DateTime(2015,3,16);
+	var endDate = new DateTime(2015,3,16);
+
+
   var transactions = new List<Transaction>
                      {
-                         new Transaction(740, "rent", new DateTime(2015, 2, 17)),
                          new Transaction(703, "jan", new DateTime(2015, 2, 15)),
-                         new Transaction(505, "santander", new DateTime(2015, 3, 09)),
-                         new Transaction(15.1, "insurance", new DateTime(2015, 3, 03)),
-                         new Transaction(6.5, "account", new DateTime(2015, 3, 02)),
-                         new Transaction(150, "saving", new DateTime(2015, 3, 01)),
-                         new Transaction(12.12, "tv", new DateTime(2015, 3, 02)),
-                         new Transaction(10, "spotify", new DateTime(2015, 2, 23)),
-                         new Transaction(6, "netflix", new DateTime(2015, 2, 21)),
                          new Transaction(3, "equifax", new DateTime(2015, 2, 16)),
-                         new Transaction(3.99, "creditex", new DateTime(2015, 03, 11)),
+                         new Transaction(740, "rent", new DateTime(2015, 2, 17)),
+                         new Transaction(6, "netflix", new DateTime(2015, 2, 21)),
+                         new Transaction(10, "spotify", new DateTime(2015, 2, 23)),
                          new Transaction(25, "tesco", new DateTime(2015, 2, 25)),
-                         new Transaction(905.55, "halifax", new DateTime(2015, 03, 12)),
-                         new Transaction(14.21, "bos", new DateTime(2015, 03, 12)),
-                         new Transaction(19.29, "loyds", new DateTime(2015, 03, 06)),
-                         new Transaction(291.67, "zopa", new DateTime(2015, 03, 09)),
                          new Transaction(470, "polska wesele", new DateTime(2015, 02, 03),1),
                          new Transaction(200, "polska karta I pozyczka", new DateTime(2015, 02, 03),1),
                          new Transaction(1400, "santander", new DateTime(2015, 02, 03),1),
                          new Transaction(449, "sofa", new DateTime(2015, 02, 20), 1),
+                         new Transaction(150, "saving", new DateTime(2015, 3, 01)),
+                         new Transaction(6.5, "account", new DateTime(2015, 3, 02)),
+                         new Transaction(12.12, "tv", new DateTime(2015, 3, 02)),
+                         new Transaction(15.1, "insurance", new DateTime(2015, 3, 03)),
+                         new Transaction(19.29, "loyds", new DateTime(2015, 03, 06)),
+                         new Transaction(291.67, "zopa", new DateTime(2015, 03, 09)),
+                         new Transaction(505, "santander", new DateTime(2015, 3, 09)),
+                         new Transaction(3.99, "creditex", new DateTime(2015, 03, 11)),
+                         new Transaction(905.55, "halifax", new DateTime(2015, 03, 12)),
+                         new Transaction(14.21, "bos", new DateTime(2015, 03, 12)),
                      };
 					 
-	transactions.OrderBy(t=>t.Date).Dump();
-	transactions.FutureTransactions(DateTime.Now.Date, new DateTime(2015,3,9).Date).OrderBy(t=>t.Date).Dump();
+	//transactions.OrderBy(t=>t.Date).Dump();
+	transactions.FutureTransactions(startDate, endDate.Date).OrderBy(t=>t.Date).Dump();
 	
 	
 }
@@ -51,7 +56,7 @@ public static class TransactionFilters
 			if (transaction.NumberOfTimes.HasValue)
 				rule.Count = transaction.NumberOfTimes.Value;
 			rule.SetToLastDayOfTheMonth(transaction.Date.Day);
-			return RecurrenceUtil.GetOccurrences(evnt,new iCalDateTime(startDate.Date),new iCalDateTime(endDate.Date), true)
+			return RecurrenceUtil.GetOccurrences(evnt,new iCalDateTime(startDate.Date.AddDays(-1)),new iCalDateTime(endDate.Date.AddDays(1)), true)
 			.Select(o=>
 				{
 					var t =	transaction.Clone();
